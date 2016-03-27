@@ -5,19 +5,18 @@ module Number.Format where
 
 import String
 import String.Split as String
-import Debug
 
 {-| A (de facto?) standard pretty formatting for numbers.
 
-    pretty 2 ',' 81601710123.338023  == "81,601,710,123.34"
-    pretty 3 ' ' 81601710123.338023  == "81 601 710 123.338"
-    pretty 3 ' ' -81601710123.338023 == "-81 601 710 123.34"
+    pretty 2 ',' '.' 81601710123.338023  == "81,601,710,123.34"
+    pretty 3 ' ' '.' 81601710123.338023  == "81 601 710 123.338"
+    pretty 3 ' ' '.' -81601710123.338023 == "-81 601 710 123.34"
 
 * Numbers are rounded to the nearest printable digit
 * Digits before the decimal are grouped into spans of three and separated by a seperator character
 -}
-pretty : Int -> Char -> Float -> String
-pretty decimals sep n =
+pretty : Int -> Char -> Char -> Float -> String
+pretty decimals sep ds n =
   let decpow  = 10 ^ decimals
       nshift  = n * toFloat decpow
       nshifti = round nshift
@@ -31,7 +30,7 @@ pretty decimals sep n =
         else prettyInt sep ni
       )
       `String.append`
-      String.cons '.' (String.padLeft decimals '0' nfs)
+      String.cons ds (String.padLeft decimals '0' nfs)
 
 
 {-| A (de facto?) standard pretty formatting for numbers.
