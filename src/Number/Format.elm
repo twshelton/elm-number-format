@@ -1,4 +1,4 @@
-module Number.Format where
+module Number.Format exposing (..)
 {-|
 @docs pretty, prettyInt
 -}
